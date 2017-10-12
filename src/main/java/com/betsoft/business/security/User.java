@@ -1,4 +1,4 @@
-package com.betsoft.model.security;
+package com.betsoft.business.security;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

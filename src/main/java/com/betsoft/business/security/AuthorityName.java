@@ -1,4 +1,4 @@
-package com.betsoft.model.security;
+package com.betsoft.business.security;
 
 /**
  * Created by MCKM on 12.10.2017.
