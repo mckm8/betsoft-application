@@ -94,7 +94,7 @@ public class JwtTokenUtil implements Serializable {
         return doGenerateToken(claims, userDetails.getUsername(), generateAudience(device));
     }
 
-    private String doGenerateToken(Map<String, Object> claims, String subject, String audience) {
+    public String doGenerateToken(Map<String, Object> claims, String subject, String audience) {
         //todo change new Date
         final Date createdDate = new Date();
         final Date expirationDate = calculateExpirationDate(createdDate);
@@ -108,6 +108,23 @@ public class JwtTokenUtil implements Serializable {
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
+    public String doGenerateTokenRSA(Map<String, Object> claims, String subject, String audience) {
+        //todo change new Date
+        final Date createdDate = new Date();
+        final Date expirationDate = calculateExpirationDate(createdDate);
+
+        System.out.println("doGenerateToken " + createdDate);
+
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(subject)
+                .setAudience(audience)
+                .setIssuedAt(createdDate)
+                .setExpiration(expirationDate)
+                .signWith(SignatureAlgorithm.RS512, secret)
                 .compact();
     }
 
