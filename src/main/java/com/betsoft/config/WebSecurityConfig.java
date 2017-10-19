@@ -77,7 +77,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.js"
                 ).permitAll()
                 .antMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated();
+                .antMatchers("/h2-console/**").permitAll()
+                .antMatchers("/users/**").permitAll()
+                .anyRequest().authenticated().
+                // dla konsoli H2 w produkcji usunac
+                    and()
+                .headers().frameOptions().disable();
 //                .and().cors().configure();
 
         // Custom JWT based security filter

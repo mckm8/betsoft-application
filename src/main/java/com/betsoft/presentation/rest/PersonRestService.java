@@ -1,6 +1,9 @@
 package com.betsoft.presentation.rest;
 
 import com.betsoft.business.rest.Person;
+import com.betsoft.business.security.User;
+import com.betsoft.security.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +19,18 @@ import java.util.List;
 public class PersonRestService {
     private static final List<Person> persons;
 
+    @Autowired
+    private UserRepository userRepository;
+
     static {
         persons = new ArrayList<>();
         persons.add(new Person("Hello", "World"));
         persons.add(new Person("Foo", "Bar"));
+    }
+
+    @RequestMapping(path = "/users", method = RequestMethod.GET)
+    public List<User> getUsers(){
+        return userRepository.findAll();
     }
 
     @RequestMapping(path = "/persons", method = RequestMethod.GET)

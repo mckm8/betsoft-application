@@ -9,6 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -91,6 +97,7 @@ public class JwtTokenUtil implements Serializable {
 
     public String generateToken(UserDetails userDetails, Device device) {
         Map<String, Object> claims = new HashMap<>();
+        claims.put("firstName", userDetails.getUsername());
         return doGenerateToken(claims, userDetails.getUsername(), generateAudience(device));
     }
 
@@ -116,7 +123,20 @@ public class JwtTokenUtil implements Serializable {
         final Date createdDate = new Date();
         final Date expirationDate = calculateExpirationDate(createdDate);
 
-        System.out.println("doGenerateToken " + createdDate);
+        KeyPairGenerator keyGenerator = null;
+        try {
+            keyGenerator = KeyPairGenerator.getInstance("RSA");
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        keyGenerator.initialize(1024);
+
+        KeyPair kp = keyGenerator.genKeyPair();
+        RSAPublicKey publicKey = (RSAPublicKey)kp.getPublic();
+        RSAPrivateKey privateKey = (RSAPrivateKey)kp.getPrivate();
+
+        String b64PublicKey = Base64.getEncoder().encodeToString(publicKey.getEncoded());
+        System.out.println("base64encoded" + b64PublicKey);
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -124,7 +144,7 @@ public class JwtTokenUtil implements Serializable {
                 .setAudience(audience)
                 .setIssuedAt(createdDate)
                 .setExpiration(expirationDate)
-                .signWith(SignatureAlgorithm.RS512, secret)
+                .signWith(SignatureAlgorithm.RS512, privateKey)
                 .compact();
     }
 

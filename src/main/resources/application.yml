@@ -8,6 +8,9 @@ spring:
   jackson:
     serialization:
       INDENT_OUTPUT: true
+  h2:
+    console:
+      enabled: true
 
 jwt:
   header: Authorization
@@ -18,7 +21,12 @@ jwt:
       path: auth
       refresh: refresh
 
-#logging:
-#  level:
-#    org.springframework:
-#      security: DEBUG
+#spring:
+#  h2:
+#    console:
+#      enabled: true
+
+logging:
+  level:
+    org.springframework:
+      security: DEBUG

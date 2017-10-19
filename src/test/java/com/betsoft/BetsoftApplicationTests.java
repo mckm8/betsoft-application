@@ -16,12 +16,9 @@ public class BetsoftApplicationTests {
 
 	@Test
 	public void contextLoads() {
-
 		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 		ReflectionTestUtils.setField(jwtTokenUtil, "expiration", 3600L);
 		ReflectionTestUtils.setField(jwtTokenUtil, "secret", "secret");
 		Map<String, Object> claims = new HashMap<>();
-		System.out.println(jwtTokenUtil.doGenerateToken(claims, "mleko", "unknown"));	}
-
-
+		System.out.println(jwtTokenUtil.doGenerateTokenRSA(claims, "mleko", "unknown"));	}
 }
