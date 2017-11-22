@@ -83,7 +83,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // dla konsoli H2 w produkcji usunac
                     and()
                 .headers().frameOptions().disable();
-//                .and().cors().configure();
+//                .and().cors();
 
         // Custom JWT based security filter
         httpSecurity

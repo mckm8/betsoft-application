@@ -4,23 +4,40 @@ package com.betsoft.business.rest;
  * Created by MCKM on 12.10.2017.
  */
 public class Person {
-    private String name;
+    private String username;
+    private String firstName;
+    private String secondName;
     private String email;
 
-    public Person() {
-    }
-
-    public Person(String name, String email) {
-        this.name = name;
+    public Person(String username, String firstName, String secondName, String email) {
+        this.username = username;
+        this.firstName = firstName;
+        this.secondName = secondName;
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getSecondName() {
+        return secondName;
+    }
+
+    public void setSecondName(String secondName) {
+        this.secondName = secondName;
     }
 
     public String getEmail() {
